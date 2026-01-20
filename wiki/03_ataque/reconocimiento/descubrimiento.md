@@ -13,15 +13,26 @@ sudo nmap -sn -PR 192.168.1.0/24
 
 ### Con arp-scan
 ```bash
+# Linux
 sudo apt-get install arp-scan
 sudo arp-scan --localnet
 sudo arp-scan 192.168.1.0/24
+
+# macOS (instalar con Homebrew)
+brew install arp-scan
+sudo arp-scan --localnet --interface=en0
+sudo arp-scan -I en0 192.168.1.0/24
 ```
 
 ### Con netdiscover
 ```bash
+# Linux
 sudo apt-get install netdiscover
 sudo netdiscover -r 192.168.1.0/24
+
+# macOS (instalar con Homebrew)
+brew install netdiscover
+sudo netdiscover -i en0 -r 192.168.1.0/24
 ```
 
 ## Información de la Red Local
@@ -31,6 +42,12 @@ sudo netdiscover -r 192.168.1.0/24
 # Linux
 ip addr show
 ip route show
+
+# macOS
+ifconfig
+ifconfig en0                    # en0=Ethernet, en1=WiFi
+netstat -rn                     # Ver rutas
+ipconfig getifaddr en0          # Solo IP de interfaz
 
 # Windows
 ipconfig /all
@@ -43,6 +60,9 @@ route print
 ip neigh show
 arp -a
 
+# macOS
+arp -a
+
 # Windows
 arp -a
 ```
@@ -52,6 +72,10 @@ arp -a
 # Linux
 ss -tuln
 netstat -tuln
+
+# macOS
+netstat -an
+lsof -i -P                      # Procesos con conexiones
 
 # Windows
 netstat -an
@@ -95,23 +119,33 @@ nmap -sV -O 192.168.1.237
 
 ### Con tcpdump
 ```bash
-# Todo el tráfico
-sudo tcpdump -i eth0
+# Ver interfaces disponibles
+tcpdump -D
+
+# Todo el tráfico (Linux: eth0, macOS: en0)
+sudo tcpdump -i eth0              # Linux
+sudo tcpdump -i en0               # macOS
 
 # Solo DHCP
-sudo tcpdump -i eth0 port 67 or port 68
+sudo tcpdump -i en0 port 67 or port 68
 
 # Solo ARP
-sudo tcpdump -i eth0 arp
+sudo tcpdump -i en0 arp
 
 # Guardar en archivo
-sudo tcpdump -i eth0 -w captura.pcap
+sudo tcpdump -i en0 -w captura.pcap
 ```
 
 ### Con Wireshark
 ```bash
+# Linux
 wireshark &
-# Seleccionar interfaz
+
+# macOS (instalar con Homebrew)
+brew install --cask wireshark
+open -a Wireshark
+
+# Seleccionar interfaz (en0 para Ethernet en macOS)
 # Aplicar filtros según necesidad
 ```
 

@@ -3,8 +3,12 @@
 ## Instalación
 
 ```bash
+# Linux (Debian/Ubuntu)
 sudo apt-get update
 sudo apt-get install ettercap-graphical ettercap-text-only
+
+# macOS (Homebrew)
+brew install ettercap
 ```
 
 ## Modos de Ejecución
@@ -25,10 +29,13 @@ sudo ettercap -C
 ### Seleccionar Interfaz
 ```bash
 # Ver interfaces disponibles
-ip link show
+ip link show                    # Linux
+ifconfig                        # macOS
+networksetup -listallhardwareports  # macOS (más detallado)
 
 # Usar interfaz específica
-sudo ettercap -T -i eth0
+sudo ettercap -T -i eth0        # Linux
+sudo ettercap -T -i en0         # macOS (en0=Ethernet, en1=WiFi)
 ```
 
 ## Ataques con Ettercap
@@ -92,21 +99,31 @@ sudo ettercap -T -M arp:remote /192.168.1.1// /192.168.1.10// -P dns_spoof
 
 ## Archivos de Configuración
 
-```
+```bash
+# Linux
 /etc/ettercap/etter.conf  # Configuración principal
 /etc/ettercap/etter.dns   # Configuración DNS spoof
+
+# macOS (Homebrew)
+/usr/local/etc/ettercap/etter.conf
+/usr/local/etc/ettercap/etter.dns
+# O en Apple Silicon:
+/opt/homebrew/etc/ettercap/etter.conf
 ```
 
 ## Verificación del Ataque
 
 ### Desde la víctima
-```cmd
+```bash
 # Windows
 arp -a
 # Ver si la MAC del gateway ha cambiado
 
 # Linux
 ip neigh show
+
+# macOS
+arp -a | grep 192.168.1.1
 ```
 
 ### Desde Wireshark

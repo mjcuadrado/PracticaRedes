@@ -65,7 +65,7 @@ sudo ettercap -T -M arp:remote /192.168.1.1// /192.168.1.10//
 # Resultado esperado: ARP falsos bloqueados
 ```
 
-### Verificar desde Víctima
+### Verificar desde Víctima (Windows)
 ```cmd
 # Antes del ataque
 arp -a
@@ -73,6 +73,19 @@ arp -a
 
 # Durante ataque (con defensa)
 arp -a
+# La MAC NO debe cambiar
+
+# Sin defensa, la MAC cambiaría a la del atacante
+```
+
+### Verificar desde Víctima (macOS)
+```bash
+# Antes del ataque
+arp -a | grep 192.168.1.1
+# Anotar MAC del gateway
+
+# Durante ataque (con defensa)
+arp -a | grep 192.168.1.1
 # La MAC NO debe cambiar
 
 # Sin defensa, la MAC cambiaría a la del atacante
@@ -146,11 +159,13 @@ arp.duplicate-address-detected
 
 ### tcpdump
 ```bash
-# ARP
-sudo tcpdump -i eth0 arp -vvv
+# ARP (Linux: eth0, macOS: en0)
+sudo tcpdump -i eth0 arp -vvv      # Linux
+sudo tcpdump -i en0 arp -vvv       # macOS
 
-# DHCP
-sudo tcpdump -i eth0 port 67 or port 68 -vvv
+# DHCP (Linux: eth0, macOS: en0)
+sudo tcpdump -i eth0 port 67 or port 68 -vvv   # Linux
+sudo tcpdump -i en0 port 67 or port 68 -vvv    # macOS
 ```
 
 ---

