@@ -36,8 +36,9 @@
 | Segmentación con VLANs | [Práctica 6](06_laboratorio/practicas/practica_06_segmentacion_vlans.md) |
 | Control Acceso 802.1X | [Práctica 7](06_laboratorio/practicas/practica_07_control_acceso_8021x.md) |
 | Hardening Completo | [Práctica 8](06_laboratorio/practicas/practica_08_hardening_completo.md) |
-| **SOLUCIÓN PRÁCTICA 2025** | |
-| Diseño Infraestructura (resuelto) | [Solución](06_laboratorio/practicas/SOLUCION_practica_diseno_infraestructura.md) |
+| **SOLUCIONES PRÁCTICAS 2025** | |
+| **Seguridad LAN (REAL)** | [Solución](06_laboratorio/practicas/SOLUCION_practica_seguridad_lan_2025.md) |
+| Diseño Infraestructura | [Solución](06_laboratorio/practicas/SOLUCION_practica_diseno_infraestructura.md) |
 | **REFERENCIA** | |
 | Ver comandos rápidos | [Cheatsheet](05_comandos/cheatsheet.md) |
 | Ver guía de la práctica | [Guía Práctica](06_laboratorio/guia_practica.md) |
