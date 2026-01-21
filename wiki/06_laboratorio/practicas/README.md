@@ -21,7 +21,7 @@
 | 4 | [Port Security](practica_04_port_security.md) | Baja | MAC Spoofing | Port Security | Comandos básicos |
 | 5 | [Rogue DHCP](practica_05_rogue_dhcp.md) | Media | DHCP Spoofing | DHCP Snooping | Ettercap/dnsmasq |
 
-### Prácticas de Diseño/Configuración (Basadas en Práctica 2025)
+### Prácticas de Configuración
 
 | # | Nombre | Dificultad | Enfoque | Tipo |
 |---|--------|------------|---------|------|
@@ -29,7 +29,7 @@
 | 7 | [Control Acceso 802.1X](practica_07_control_acceso_8021x.md) | Media-Alta | NAC con RADIUS | Config |
 | 8 | [Hardening Completo](practica_08_hardening_completo.md) | Media-Alta | Securización integral | Config + Test |
 
-### Práctica Seguridad LAN 2025 (Examen Real)
+### Práctica Defensa 2025 (Examen Real)
 
 | Documento | Descripción |
 |-----------|-------------|
@@ -116,10 +116,9 @@ FASE 5: Documentación (15-35 min)
 - Muy relevante para seguridad de redes
 - Demuestra cómo un atacante se convierte en gateway
 
-### Si la práctica es de DISEÑO de infraestructura (como 2025)
+### Si necesitan segmentar la red
 **Elegir:** [Práctica 6: Segmentación VLANs](practica_06_segmentacion_vlans.md)
-- Diseño + implementación práctica
-- Relaciona con la práctica teórica de diseño
+- Diseño + implementación práctica de VLANs
 - Incluye verificación de aislamiento
 
 ### Si piden control de acceso / NAC
@@ -196,16 +195,17 @@ Cada práctica debe generar:
 | [Práctica 4](practica_04_port_security.md) | Port Security - Control de MACs |
 | [Práctica 5](practica_05_rogue_dhcp.md) | Rogue DHCP - Servidor DHCP falso |
 
-### Prácticas de Diseño/Configuración
+### Prácticas de Configuración
 | Práctica | Descripción |
 |----------|-------------|
 | [Práctica 6](practica_06_segmentacion_vlans.md) | Segmentación de red con VLANs |
 | [Práctica 7](practica_07_control_acceso_8021x.md) | Control de acceso con 802.1X y RADIUS |
 | [Práctica 8](practica_08_hardening_completo.md) | Hardening completo del switch |
 
-### Material de Referencia
+### Práctica Defensa 2025 (Examen Real)
 | Documento | Descripción |
 |-----------|-------------|
-| [SOLUCIÓN Diseño Infraestructura](SOLUCION_practica_diseno_infraestructura.md) | Solución práctica teórica 2025 |
+| [ENUNCIADO](ENUNCIADO_practica_seguridad_lan_2025.md) | Qué hay que hacer (tareas del examen) |
+| [SOLUCIÓN](SOLUCION_practica_seguridad_lan_2025.md) | Paso a paso con comandos y capturas |
 
 ⬅️ [Volver a Guía Práctica](../guia_practica.md) | [Volver al Índice](../../INDEX.md)

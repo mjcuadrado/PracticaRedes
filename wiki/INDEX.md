@@ -36,7 +36,7 @@
 | Segmentación con VLANs | [Práctica 6](06_laboratorio/practicas/practica_06_segmentacion_vlans.md) |
 | Control Acceso 802.1X | [Práctica 7](06_laboratorio/practicas/practica_07_control_acceso_8021x.md) |
 | Hardening Completo | [Práctica 8](06_laboratorio/practicas/practica_08_hardening_completo.md) |
-| **PRÁCTICA SEGURIDAD LAN 2025** | |
+| **PRÁCTICA DEFENSA 2025 (Examen Real)** | |
 | Enunciado (qué hay que hacer) | [Ver Enunciado](06_laboratorio/practicas/ENUNCIADO_practica_seguridad_lan_2025.md) |
 | Solución paso a paso | [Ver Solución](06_laboratorio/practicas/SOLUCION_practica_seguridad_lan_2025.md) |
 | **REFERENCIA** | |
@@ -91,12 +91,10 @@
   - [Práctica 3: Ciclo NIST Completo](06_laboratorio/practicas/practica_03_ciclo_nist.md) - Dificultad: Media-Alta
   - [Práctica 4: Port Security Básico](06_laboratorio/practicas/practica_04_port_security.md) - Dificultad: Baja
   - [Práctica 5: Rogue DHCP Server](06_laboratorio/practicas/practica_05_rogue_dhcp.md) - Dificultad: Media
-- **Prácticas de Diseño/Configuración** (basadas en práctica 2025)
+- **Prácticas de Configuración**
   - [Práctica 6: Segmentación VLANs](06_laboratorio/practicas/practica_06_segmentacion_vlans.md) - Dificultad: Media
   - [Práctica 7: Control Acceso 802.1X](06_laboratorio/practicas/practica_07_control_acceso_8021x.md) - Dificultad: Media-Alta
   - [Práctica 8: Hardening Completo](06_laboratorio/practicas/practica_08_hardening_completo.md) - Dificultad: Media-Alta
-- **Solución Práctica Teórica 2025**
-  - [SOLUCIÓN: Diseño Infraestructura](06_laboratorio/practicas/SOLUCION_practica_diseno_infraestructura.md)
 - **Plantillas**
   - [Plantilla Configuración](06_laboratorio/plantillas/plantilla_configuracion.md)
   - [Plantilla Ataque](06_laboratorio/plantillas/plantilla_ataque.md)
@@ -117,7 +115,7 @@
 
 Todas las prácticas están diseñadas para **2 horas** y trabajo **en parejas**.
 
-### Tipo 1: Ataque/Defensa (Atacante + Defensor)
+### Prácticas de Ataque/Defensa
 
 | # | Práctica | Dificultad | Ataque | Defensa | Probabilidad |
 |---|----------|------------|--------|---------|--------------|
@@ -127,7 +125,7 @@ Todas las prácticas están diseñadas para **2 horas** y trabajo **en parejas**
 | 4 | [Port Security](06_laboratorio/practicas/practica_04_port_security.md) | Baja | Cambio de MAC | Port Security | 50% |
 | 5 | [Rogue DHCP](06_laboratorio/practicas/practica_05_rogue_dhcp.md) | Media | Ettercap/dnsmasq | DHCP Snooping | 70% |
 
-### Tipo 2: Diseño/Configuración (Diseñador + Implementador)
+### Prácticas de Configuración
 
 | # | Práctica | Dificultad | Enfoque | Probabilidad |
 |---|----------|------------|---------|--------------|
@@ -135,16 +133,9 @@ Todas las prácticas están diseñadas para **2 horas** y trabajo **en parejas**
 | 7 | [Control Acceso 802.1X](06_laboratorio/practicas/practica_07_control_acceso_8021x.md) | Media-Alta | NAC + RADIUS | 40% |
 | 8 | [Hardening Completo](06_laboratorio/practicas/practica_08_hardening_completo.md) | Media-Alta | Securización integral | 65% |
 
-### Tipo 3: Teórico (Diseño de Infraestructura)
-
-| Documento | Descripción |
-|-----------|-------------|
-| [SOLUCIÓN Práctica 2025](06_laboratorio/practicas/SOLUCION_practica_diseno_infraestructura.md) | Diseño completo de red empresarial |
-
-### Roles por Tipo de Práctica
-- **Tipo 1:** 🔴 ATACANTE + 🔵 DEFENSOR
-- **Tipo 2:** 🔵 DISEÑADOR + 🔴 IMPLEMENTADOR
-- **Tipo 3:** Trabajo individual o en grupo (documentación)
+### Roles en las Prácticas
+- **Ataque/Defensa:** 🔴 ATACANTE + 🔵 DEFENSOR
+- **Configuración:** 🔵 DISEÑADOR + 🔴 IMPLEMENTADOR
 
 ---
 
