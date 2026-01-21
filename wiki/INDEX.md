@@ -26,6 +26,18 @@
 | **DEFENSA** | |
 | Checklist de hardening | [Checklist Seguridad](04_defensa/hardening/checklist_seguridad.md) |
 | Verificar que defensas funcionan | [Verificación](04_defensa/monitoreo/verificacion.md) |
+| **PRÁCTICAS DE EXAMEN (Ataque/Defensa)** | |
+| Práctica fácil (DHCP Starvation) | [Práctica 1](06_laboratorio/practicas/practica_01_dhcp_starvation.md) |
+| Práctica fácil (Port Security) | [Práctica 4](06_laboratorio/practicas/practica_04_port_security.md) |
+| Práctica media (ARP Poisoning) | [Práctica 2](06_laboratorio/practicas/practica_02_arp_poisoning.md) |
+| Práctica media (Rogue DHCP) | [Práctica 5](06_laboratorio/practicas/practica_05_rogue_dhcp.md) |
+| Práctica completa (Ciclo NIST) | [Práctica 3](06_laboratorio/practicas/practica_03_ciclo_nist.md) |
+| **PRÁCTICAS DE DISEÑO/CONFIG** | |
+| Segmentación con VLANs | [Práctica 6](06_laboratorio/practicas/practica_06_segmentacion_vlans.md) |
+| Control Acceso 802.1X | [Práctica 7](06_laboratorio/practicas/practica_07_control_acceso_8021x.md) |
+| Hardening Completo | [Práctica 8](06_laboratorio/practicas/practica_08_hardening_completo.md) |
+| **SOLUCIÓN PRÁCTICA 2025** | |
+| Diseño Infraestructura (resuelto) | [Solución](06_laboratorio/practicas/SOLUCION_practica_diseno_infraestructura.md) |
 | **REFERENCIA** | |
 | Ver comandos rápidos | [Cheatsheet](05_comandos/cheatsheet.md) |
 | Ver guía de la práctica | [Guía Práctica](06_laboratorio/guia_practica.md) |
@@ -72,6 +84,18 @@
 
 ### 06. Laboratorio
 - [Guía de la Práctica](06_laboratorio/guia_practica.md)
+- **Prácticas de Ataque/Defensa** (2 horas, trabajo en parejas)
+  - [Práctica 1: DHCP Starvation](06_laboratorio/practicas/practica_01_dhcp_starvation.md) - Dificultad: Baja
+  - [Práctica 2: ARP Poisoning MITM](06_laboratorio/practicas/practica_02_arp_poisoning.md) - Dificultad: Media
+  - [Práctica 3: Ciclo NIST Completo](06_laboratorio/practicas/practica_03_ciclo_nist.md) - Dificultad: Media-Alta
+  - [Práctica 4: Port Security Básico](06_laboratorio/practicas/practica_04_port_security.md) - Dificultad: Baja
+  - [Práctica 5: Rogue DHCP Server](06_laboratorio/practicas/practica_05_rogue_dhcp.md) - Dificultad: Media
+- **Prácticas de Diseño/Configuración** (basadas en práctica 2025)
+  - [Práctica 6: Segmentación VLANs](06_laboratorio/practicas/practica_06_segmentacion_vlans.md) - Dificultad: Media
+  - [Práctica 7: Control Acceso 802.1X](06_laboratorio/practicas/practica_07_control_acceso_8021x.md) - Dificultad: Media-Alta
+  - [Práctica 8: Hardening Completo](06_laboratorio/practicas/practica_08_hardening_completo.md) - Dificultad: Media-Alta
+- **Solución Práctica Teórica 2025**
+  - [SOLUCIÓN: Diseño Infraestructura](06_laboratorio/practicas/SOLUCION_practica_diseno_infraestructura.md)
 - **Plantillas**
   - [Plantilla Configuración](06_laboratorio/plantillas/plantilla_configuracion.md)
   - [Plantilla Ataque](06_laboratorio/plantillas/plantilla_ataque.md)
@@ -85,6 +109,43 @@
 |--------|----|--------|
 | Switch Cisco SG300-10 | 192.168.1.237 | HTTPS Web |
 | Router Cisco RV 120W | 192.168.1.1 | |
+
+---
+
+## Prácticas Propuestas para Examen
+
+Todas las prácticas están diseñadas para **2 horas** y trabajo **en parejas**.
+
+### Tipo 1: Ataque/Defensa (Atacante + Defensor)
+
+| # | Práctica | Dificultad | Ataque | Defensa | Probabilidad |
+|---|----------|------------|--------|---------|--------------|
+| 1 | [DHCP Starvation](06_laboratorio/practicas/practica_01_dhcp_starvation.md) | Baja | Yersinia | DHCP Snooping | 85% |
+| 2 | [ARP Poisoning MITM](06_laboratorio/practicas/practica_02_arp_poisoning.md) | Media | Ettercap | DAI (ARP Inspection) | 80% |
+| 3 | [Ciclo NIST](06_laboratorio/practicas/practica_03_ciclo_nist.md) | Media-Alta | Varios | Varios + Framework | 60% |
+| 4 | [Port Security](06_laboratorio/practicas/practica_04_port_security.md) | Baja | Cambio de MAC | Port Security | 50% |
+| 5 | [Rogue DHCP](06_laboratorio/practicas/practica_05_rogue_dhcp.md) | Media | Ettercap/dnsmasq | DHCP Snooping | 70% |
+
+### Tipo 2: Diseño/Configuración (Diseñador + Implementador)
+
+| # | Práctica | Dificultad | Enfoque | Probabilidad |
+|---|----------|------------|---------|--------------|
+| 6 | [Segmentación VLANs](06_laboratorio/practicas/practica_06_segmentacion_vlans.md) | Media | VLANs + Aislamiento | 75% |
+| 7 | [Control Acceso 802.1X](06_laboratorio/practicas/practica_07_control_acceso_8021x.md) | Media-Alta | NAC + RADIUS | 40% |
+| 8 | [Hardening Completo](06_laboratorio/practicas/practica_08_hardening_completo.md) | Media-Alta | Securización integral | 65% |
+
+### Tipo 3: Teórico (Diseño de Infraestructura)
+
+| Documento | Descripción |
+|-----------|-------------|
+| [SOLUCIÓN Práctica 2025](06_laboratorio/practicas/SOLUCION_practica_diseno_infraestructura.md) | Diseño completo de red empresarial |
+
+### Roles por Tipo de Práctica
+- **Tipo 1:** 🔴 ATACANTE + 🔵 DEFENSOR
+- **Tipo 2:** 🔵 DISEÑADOR + 🔴 IMPLEMENTADOR
+- **Tipo 3:** Trabajo individual o en grupo (documentación)
+
+---
 
 ## Flujo de la Práctica
 
