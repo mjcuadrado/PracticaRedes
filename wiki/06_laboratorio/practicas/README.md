@@ -29,11 +29,12 @@
 | 7 | [Control Acceso 802.1X](practica_07_control_acceso_8021x.md) | Media-Alta | NAC con RADIUS | Config |
 | 8 | [Hardening Completo](practica_08_hardening_completo.md) | Media-Alta | Securización integral | Config + Test |
 
-### Solución Práctica 2025
+### Práctica Seguridad LAN 2025 (Examen Real)
 
 | Documento | Descripción |
 |-----------|-------------|
-| [**SOLUCIÓN Seguridad LAN 2025**](SOLUCION_practica_seguridad_lan_2025.md) | **Práctica real: ARP Poisoning + DHCP Spoofing** |
+| [**ENUNCIADO**](ENUNCIADO_practica_seguridad_lan_2025.md) | Qué hay que hacer (tareas del examen) |
+| [**SOLUCIÓN**](SOLUCION_practica_seguridad_lan_2025.md) | Paso a paso con comandos y capturas |
 
 ---
 
