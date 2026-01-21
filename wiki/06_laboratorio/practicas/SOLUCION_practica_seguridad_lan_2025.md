@@ -32,12 +32,13 @@
                          │  Pass: cisco.25 │
                          └───┬─────────┬───┘
                              │         │
-                    ┌────────▼───┐ ┌───▼────────┐
-                    │ PC LINUX   │ │ PC WINDOWS │
-                    │ (Atacante) │ │ (Gestión)  │
-                    │192.168.88.X│ │192.168.88.X│
-                    │  Ettercap  │ │            │
-                    └────────────┘ └────────────┘
+                    ┌────────▼───┐ ┌───▼────────────┐
+                    │ PC LINUX/  │ │ PC WINDOWS/    │
+                    │ macOS      │ │ macOS          │
+                    │ (Atacante) │ │ (Víctima)      │
+                    │192.168.88.X│ │ 192.168.88.X   │
+                    │  Ettercap  │ │                │
+                    └────────────┘ └────────────────┘
 ```
 
 ---
@@ -51,20 +52,32 @@
 
 ### Paso 0.2: Iniciar los PCs
 
-- **PC Windows:** Para gestión del router y switch
-- **PC Linux (Ubuntu):** Para ejecutar ataques con Ettercap
+- **PC Víctima (Windows/macOS):** Para gestión del router y switch
+- **PC Atacante (Linux/macOS):** Para ejecutar ataques con Ettercap
 
 ### Paso 0.3: Verificar conectividad
 
-**En PC Windows:**
+**En PC Víctima (Windows):**
 ```cmd
 ipconfig
 ping 192.168.88.1
 ```
 
-**En PC Linux:**
+**En PC Víctima (macOS):**
+```bash
+ifconfig en0
+ping 192.168.88.1
+```
+
+**En PC Atacante (Linux):**
 ```bash
 ip addr show
+ping 192.168.88.1
+```
+
+**En PC Atacante (macOS):**
+```bash
+ifconfig en0
 ping 192.168.88.1
 ```
 
@@ -72,7 +85,7 @@ ping 192.168.88.1
 
 ## FASE 1: Reconocimiento
 
-### Paso 1.1: Acceder al Router (desde Windows)
+### Paso 1.1: Acceder al Router (desde PC Víctima)
 
 1. Abrir navegador
 2. Ir a: `http://192.168.88.1`
@@ -90,12 +103,12 @@ ping 192.168.88.1
 |--------|----|----|
 | Router | 192.168.88.1 | `__:__:__:__:__:__` |
 | Switch | 192.168.88.__ | `__:__:__:__:__:__` |
-| PC Windows | 192.168.88.__ | `__:__:__:__:__:__` |
-| PC Linux | 192.168.88.__ | `__:__:__:__:__:__` |
+| PC Víctima | 192.168.88.__ | `__:__:__:__:__:__` |
+| PC Atacante | 192.168.88.__ | `__:__:__:__:__:__` |
 
 **Captura de pantalla:** Tabla IP-ARP del router
 
-### Paso 1.3: Acceder al Switch (desde Windows)
+### Paso 1.3: Acceder al Switch (desde PC Víctima)
 
 1. Abrir navegador
 2. Ir a: `http://192.168.88.XX` (IP del switch descubierta)
@@ -112,17 +125,22 @@ ping 192.168.88.1
 
 **Captura de pantalla:** Menús de seguridad del switch
 
-### Paso 1.5: Instalar Ettercap en Linux
+### Paso 1.5: Instalar Ettercap en PC Atacante
 
+**Linux (Ubuntu/Debian):**
 ```bash
-sudo -i
-apt-get update
-apt-get install ettercap-graphical -y
+sudo apt-get update
+sudo apt-get install ettercap-graphical -y
 ```
 
-Iniciar Ettercap:
+**macOS:**
 ```bash
-ettercap -G
+brew install ettercap
+```
+
+**Iniciar Ettercap (ambos sistemas):**
+```bash
+sudo ettercap -G
 ```
 
 **Captura de pantalla:** Ettercap abierto
@@ -147,14 +165,14 @@ ettercap -G
 
 ### Paso 2.3: Definir objetivos (Targets)
 
-1. Seleccionar **IP del PC Windows** → Click **Add to Target 1**
+1. Seleccionar **IP del PC Víctima** → Click **Add to Target 1**
 2. Seleccionar **IP del Router (192.168.88.1)** → Click **Add to Target 2**
 
 **Verificar:** Menú **Targets → Current Targets**
 
 | Target | IP | Descripción |
 |--------|----|----|
-| Target 1 | 192.168.88.XX | PC Windows (víctima) |
+| Target 1 | 192.168.88.XX | PC Víctima |
 | Target 2 | 192.168.88.1 | Router (gateway) |
 
 ### Paso 2.4: Iniciar el ataque ARP
@@ -167,7 +185,7 @@ ettercap -G
 **Salida en Ettercap:**
 ```
 ARP poisoning victims:
- GROUP 1 : 192.168.88.XX (PC Windows)
+ GROUP 1 : 192.168.88.XX (PC Víctima)
  GROUP 2 : 192.168.88.1 (Router)
 Starting Unified sniffing...
 ```
@@ -177,21 +195,21 @@ Starting Unified sniffing...
 ### Paso 2.5: Verificar el ataque (desde Router)
 
 1. En el Router: **IP → ARP**
-2. Observar que la **MAC del PC Windows** ahora aparece como la **MAC del PC Linux (atacante)**
+2. Observar que la **MAC del PC Víctima** ahora aparece como la **MAC del PC Atacante**
 
 **Tabla ARP envenenada:**
 
 | IP | MAC | Estado |
 |----|-----|--------|
-| 192.168.88.XX (Windows) | `AA:BB:CC:DD:EE:FF` | ← MAC del atacante! |
-| 192.168.88.XX (Linux) | `AA:BB:CC:DD:EE:FF` | MAC real del atacante |
+| 192.168.88.XX (Víctima) | `AA:BB:CC:DD:EE:FF` | ← MAC del atacante! |
+| 192.168.88.XX (Atacante) | `AA:BB:CC:DD:EE:FF` | MAC real del atacante |
 
 **Captura de pantalla:** Tabla ARP del router mostrando envenenamiento
 
 ### Paso 2.6: Analizar conexiones en Ettercap
 
 1. En Ettercap: **View → Connections**
-2. Observar el tráfico interceptado entre Windows y Router
+2. Observar el tráfico interceptado entre PC Víctima y Router
 
 **Captura de pantalla:** Conexiones capturadas en Ettercap
 
@@ -235,8 +253,8 @@ Starting Unified sniffing...
 | Puerto | Trusted | Descripción |
 |--------|---------|-------------|
 | Puerto del Router | ✅ Sí | Tráfico legítimo |
-| Puerto PC Windows | ❌ No | Usuario normal |
-| Puerto PC Linux | ❌ No | Posible atacante |
+| Puerto PC Víctima | ❌ No | Usuario normal |
+| Puerto PC Atacante | ❌ No | Posible atacante |
 
 1. Seleccionar puerto del Router
 2. Marcar como **Trusted**
@@ -253,12 +271,12 @@ Añadir reglas estáticas para equipos conocidos:
 | IP | MAC | Acción |
 |----|-----|--------|
 | 192.168.88.1 | `MAC_real_router` | Permit |
-| 192.168.88.XX | `MAC_real_windows` | Permit |
+| 192.168.88.XX | `MAC_real_victima` | Permit |
 
 1. Click **Add**
 2. Introducir IP y MAC del router
 3. Click **Apply**
-4. Repetir para PC Windows
+4. Repetir para PC Víctima
 
 ### Paso 3.6: Activar ARP Inspection en VLAN 1
 
@@ -300,32 +318,41 @@ Temporalmente deshabilitar ARP Inspection para probar el ataque DHCP:
 
 ### Paso 4.2: Configurar ataque DHCP en Ettercap
 
-1. Abrir Ettercap: `ettercap -G`
+1. Abrir Ettercap: `sudo ettercap -G`
 2. Menú: **Sniff → Unified Sniffing** → Seleccionar interfaz
 3. Menú: **Mitm → DHCP Spoofing**
 4. Configurar:
    - **IP Pool:** (dejar vacío o poner rango)
    - **Netmask:** `255.255.255.0`
-   - **DNS Server IP:** `192.168.88.XX` (IP del PC Linux atacante)
+   - **DNS Server IP:** `192.168.88.XX` (IP del PC Atacante)
 5. Click **OK**
 6. Menú: **Start → Start sniffing**
 
 **Captura de pantalla:** Configuración DHCP Spoofing en Ettercap
 
-### Paso 4.3: Forzar renovación DHCP en Windows
+### Paso 4.3: Forzar renovación DHCP en PC Víctima
 
-**En PC Windows (CMD como Administrador):**
-
+**Windows (CMD como Administrador):**
 ```cmd
 ipconfig /release
 ipconfig /renew
 ```
 
+**macOS (Terminal):**
+```bash
+sudo ipconfig set en0 BOOTP && sudo ipconfig set en0 DHCP
+```
+
 ### Paso 4.4: Verificar el ataque
 
-**En PC Windows:**
+**Windows:**
 ```cmd
 ipconfig /all
+```
+
+**macOS:**
+```bash
+ipconfig getpacket en0
 ```
 
 **Resultado del ataque (si funciona):**
@@ -350,7 +377,9 @@ El atacante ahora puede ver todo el tráfico porque es el gateway.
 ### Paso 4.6: Detener el ataque
 
 1. Menú: **Mitm → Stop mitm attack(s)**
-2. En Windows: `ipconfig /release` + `ipconfig /renew` (para obtener IP del DHCP real)
+2. Renovar IP para obtener configuración del DHCP real:
+   - **Windows:** `ipconfig /release` + `ipconfig /renew`
+   - **macOS:** `sudo ipconfig set en0 BOOTP && sudo ipconfig set en0 DHCP`
 
 ---
 
@@ -385,8 +414,8 @@ El atacante ahora puede ver todo el tráfico porque es el gateway.
 | Puerto | Trusted | Descripción |
 |--------|---------|-------------|
 | Puerto del Router | ✅ Sí | Servidor DHCP legítimo |
-| Puerto PC Windows | ❌ No | Cliente DHCP |
-| Puerto PC Linux | ❌ No | Posible atacante |
+| Puerto PC Víctima | ❌ No | Cliente DHCP |
+| Puerto PC Atacante | ❌ No | Posible atacante |
 
 1. Seleccionar puerto donde está conectado el **Router**
 2. Marcar como **Trusted**
@@ -413,15 +442,21 @@ ettercap -G
 # Configurar DHCP Spoofing y activar
 ```
 
-**En Windows:**
+**En PC Víctima (Windows):**
 ```cmd
 ipconfig /release
 ipconfig /renew
 ipconfig /all
 ```
 
+**En PC Víctima (macOS):**
+```bash
+sudo ipconfig set en0 BOOTP && sudo ipconfig set en0 DHCP
+ipconfig getpacket en0
+```
+
 **Resultado esperado:**
-- El PC Windows recibe IP del **Router legítimo** (192.168.88.1)
+- El PC Víctima recibe IP del **Router legítimo** (192.168.88.1)
 - **NO** recibe configuración del atacante
 - El switch **descarta** los paquetes DHCP del puerto no trusted
 
@@ -480,7 +515,7 @@ ipconfig /all
 
 ## Comandos Rápidos
 
-### Linux (Atacante)
+### PC Atacante (Linux)
 
 ```bash
 # Instalar Ettercap
@@ -494,7 +529,26 @@ sudo ettercap -G
 sudo ettercap -T -M arp:remote /192.168.88.1// /192.168.88.XX//
 ```
 
-### Windows (Gestión/Víctima)
+### PC Atacante (macOS)
+
+```bash
+# Instalar Ettercap
+brew install ettercap
+
+# Iniciar Ettercap gráfico
+sudo ettercap -G
+
+# Alternativa: Ettercap en terminal
+sudo ettercap -T -M arp:remote /192.168.88.1// /192.168.88.XX//
+
+# Ver configuración de red
+ifconfig en0
+
+# Ver tabla ARP
+arp -a
+```
+
+### PC Víctima (Windows)
 
 ```cmd
 :: Ver configuración de red
@@ -511,6 +565,25 @@ arp -a
 
 :: Limpiar tabla ARP
 arp -d *
+```
+
+### PC Víctima (macOS)
+
+```bash
+# Ver configuración de red
+ifconfig en0
+
+# Ver configuración DHCP detallada
+ipconfig getpacket en0
+
+# Renovar IP (liberar y obtener nueva)
+sudo ipconfig set en0 BOOTP && sudo ipconfig set en0 DHCP
+
+# Ver tabla ARP
+arp -a
+
+# Limpiar tabla ARP
+sudo arp -d -a
 ```
 
 ---

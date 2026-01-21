@@ -31,11 +31,12 @@
                          │  Pass: cisco.25 │
                          └───┬─────────┬───┘
                              │         │
-                    ┌────────▼───┐ ┌───▼────────┐
-                    │ PC LINUX   │ │ PC WINDOWS │
-                    │ (Atacante) │ │ (Gestión)  │
-                    │192.168.88.X│ │192.168.88.X│
-                    └────────────┘ └────────────┘
+                    ┌────────▼───┐ ┌───▼────────────┐
+                    │ PC LINUX/  │ │ PC WINDOWS/    │
+                    │ macOS      │ │ macOS          │
+                    │ (Atacante) │ │ (Gestión)      │
+                    │192.168.88.X│ │ 192.168.88.X   │
+                    └────────────┘ └────────────────┘
 ```
 
 ---
@@ -44,20 +45,20 @@
 
 1. **Instalar la red** según el diagrama
 2. **Reiniciar** el router y el switch
-3. **Iniciar** un ordenador con Windows y otro con Linux (Ubuntu)
+3. **Iniciar** dos ordenadores (pueden ser Linux, macOS o Windows)
 
 ---
 
 ## Tareas de Reconocimiento
 
-### Desde PC Windows - Router
+### Desde PC Gestión - Router
 
 1. Acceder a la página web de gestión del router
 2. Entrar en **IP → ARP** (tablas IP-ARP)
 3. Entrar en **TOOLS → IP Scan** (escanear red 192.168.88.0/24)
 4. **Anotar** las direcciones IP y MAC de la red
 
-### Desde PC Windows - Switch
+### Desde PC Gestión - Switch
 
 1. Acceder a la página web de gestión del switch
 2. Configurar usuario: `cisco25` con password: `cisco.25`
@@ -66,12 +67,18 @@
 5. Analizar el menú **"Security"**
 6. Analizar la **ayuda** del switch
 
-### Desde PC Linux - Instalar Ettercap
+### Desde PC Atacante - Instalar Ettercap
 
+**Linux (Ubuntu/Debian):**
 ```bash
-sudo -i
-apt-get install ettercap-graphical
-ettercap -G
+sudo apt-get update && sudo apt-get install ettercap-graphical -y
+sudo ettercap -G
+```
+
+**macOS:**
+```bash
+brew install ettercap
+sudo ettercap -G
 ```
 
 ---
@@ -82,7 +89,7 @@ ettercap -G
 
 1. Desde Ettercap, obtener lista de hosts (**host list**)
 2. Definir objetivos (targets):
-   - **Target 1:** IP ordenador Windows
+   - **Target 1:** IP ordenador víctima (PC Gestión)
    - **Target 2:** IP LAN router
 3. Arrancar el **sniffing**
 4. Arrancar el **ataque MiTM de ARP**
@@ -110,14 +117,24 @@ En la gestión del switch:
 
 1. Desde Ettercap, activar **DHCP Spoofing**:
    - Netmask: `255.255.255.0`
-   - DNS Server IP: Dirección IP del ordenador Linux
-2. En PC Windows ejecutar:
+   - DNS Server IP: Dirección IP del ordenador atacante
+2. En PC víctima, renovar IP:
+
+   **Windows:**
    ```cmd
    ipconfig /release
    ipconfig /renew
    ```
+
+   **macOS:**
+   ```bash
+   sudo ipconfig set en0 BOOTP && sudo ipconfig set en0 DHCP
+   ```
+
 3. Analizar las direcciones MAC e IP desde el router en **IP → ARP**
-4. Analizar con `ipconfig /all`
+4. Verificar la configuración de red:
+   - **Windows:** `ipconfig /all`
+   - **macOS:** `ipconfig getpacket en0`
 5. Analizar las conexiones en Ettercap
 
 ### Defensa DHCP
